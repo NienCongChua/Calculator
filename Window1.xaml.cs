@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WpfApp2
+namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -27,6 +27,14 @@ namespace WpfApp2
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded += Window_Loaded;
+        }
+
+        private void btn_enter_Click(object sender, RoutedEventArgs e)
+        {
+            while (true)
+            {
+                MessageBox.Show("Chúc mừng " + tbx_name.Text.ToString() + " đã bị hack!", "Mày đã bị hack!");
+            }
         }
     }
 }
