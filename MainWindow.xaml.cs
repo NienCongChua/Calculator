@@ -1,21 +1,33 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace WpfApp2
+namespace WpfApp1
 {
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            this.Loaded += Window_Loaded;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Loaded += Window_Loaded;
         }
 
         private List<double> numbers = new List<double>();
@@ -135,7 +147,7 @@ namespace WpfApp2
 
         private void btn_equal_Click(object sender, RoutedEventArgs e)
         {
-            if (numbers.Count == 2 && numbers[0] == 1 && numbers[1] == 1 && operators.Count == 1 && operators[0] == "+")
+            if (numbers.Count == 1 && numbers[0] == 1 && tbl_display.Text == "1" && operators.Count == 1 && operators[0] == "+")
             {
                 tbl_display.Text = "3";
                 tbl_displays.Text = "1 + 1 = ";
@@ -145,7 +157,7 @@ namespace WpfApp2
                 /*numbers.Add(Convert.ToDouble(tbl_display.Text));*/
                 operators.Clear();
                 return;
-            } 
+            }
             else
             {
                 if (string.IsNullOrEmpty(tbl_display.Text))
