@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,7 +15,7 @@ namespace WpfApp1
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    { 
         public MainWindow()
         {
             InitializeComponent();
@@ -110,83 +106,132 @@ namespace WpfApp1
         private void btn_operator_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            if (!string.IsNullOrEmpty(tbl_display.Text))
+            try
             {
-                numbers.Add(Convert.ToDouble(tbl_display.Text));
-                operators.Add(button.Content?.ToString() ?? string.Empty);
-                tbl_display.Text = string.Empty;
+                if (!string.IsNullOrEmpty(tbl_display.Text))
+                {
+                    numbers.Add(Convert.ToDouble(tbl_display.Text));
+                    operators.Add(button.Content?.ToString() ?? string.Empty);
+                    tbl_display.Text = string.Empty;
+                }
+                else if (operators.Count > 0)
+                {
+                    operators[operators.Count - 1] = button.Content?.ToString() ?? string.Empty;
+                }
             }
-            else if (operators.Count > 0)
-            {
-                operators[operators.Count - 1] = button.Content?.ToString() ?? string.Empty;
+            catch {
+                MessageBox.Show("Mày nhập sai rồi cu", "Systax Error");
+                numbers.Clear();
+                operators.Clear();
+                tbl_display.Text = string.Empty;
+                tbl_displays.Text = string.Empty;
+                cal = string.Empty;
             }
         }
 
         private void btn_dau_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(tbl_display.Text))
-                return;
+            try
+            {
+                if (string.IsNullOrEmpty(tbl_display.Text))
+                    return;
 
-            if (tbl_display.Text.StartsWith("-"))
-            {
-                tbl_display.Text = tbl_display.Text.Substring(1);
+                if (tbl_display.Text.StartsWith("-"))
+                {
+                    tbl_display.Text = tbl_display.Text.Substring(1);
+                }
+                else
+                {
+                    tbl_display.Text = "-" + tbl_display.Text;
+                }
             }
-            else
+            catch
             {
-                tbl_display.Text = "-" + tbl_display.Text;
+                MessageBox.Show("Mày nhập sai rồi cu", "Systax Error");
+                numbers.Clear();
+                operators.Clear();
+                tbl_display.Text = string.Empty;
+                tbl_displays.Text = string.Empty;
+                cal = string.Empty;
             }
+            
         }
 
         private void btn_phantram_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(tbl_display.Text))
+            try
             {
-                tbl_display.Text = (Convert.ToDouble(tbl_display.Text) / 100).ToString();
+                if (!string.IsNullOrEmpty(tbl_display.Text))
+                {
+                    tbl_display.Text = (Convert.ToDouble(tbl_display.Text) / 100).ToString();
+                }
+            } 
+            catch 
+            {
+                MessageBox.Show("Mày nhập sai rồi cu", "Systax Error");
+                numbers.Clear();
+                operators.Clear();
+                tbl_display.Text = string.Empty;
+                tbl_displays.Text = string.Empty;
+                cal = string.Empty;
             }
         }
 
         private void btn_equal_Click(object sender, RoutedEventArgs e)
         {
-            if (numbers.Count == 1 && numbers[0] == 1 && tbl_display.Text == "1" && operators.Count == 1 && operators[0] == "+")
+            try
             {
-                tbl_display.Text = "3";
-                tbl_displays.Text = "1 + 1 = ";
-                cal = string.Empty;
-                /*cal = tbl_display.Text;*/
-                numbers.Clear();
-                /*numbers.Add(Convert.ToDouble(tbl_display.Text));*/
-                operators.Clear();
-                return;
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(tbl_display.Text))
+                if (numbers.Count == 1 && numbers[0] == 1 && tbl_display.Text == "1" && operators.Count == 1 && operators[0] == "+")
                 {
-                    MessageBox.Show("Mày nhập sai rồi cu\nCó nhập đéo gì đâu mà nhấn \"=\"", "Systax Error!");
-                    return;
-                }
-
-                if (tbl_display.Text == "-30122004")
-                {
-                    tbl_display.Text = string.Empty;
-                    tbl_displays.Text = string.Empty;
-                    MessageBox.Show("Chuyển sang chế độ chuyên nghiệp thành công", "Congratulation!");
-                    Window1 window1 = new Window1();
-                    window1.ShowDialog();
+                    tbl_display.Text = "3";
+                    tbl_displays.Text = "1 + 1 = ";
+                    cal = string.Empty;
+                    /*cal = tbl_display.Text;*/
                     numbers.Clear();
+                    /*numbers.Add(Convert.ToDouble(tbl_display.Text));*/
                     operators.Clear();
                     return;
                 }
+                else
+                {
+                    if (string.IsNullOrEmpty(tbl_display.Text))
+                    {
+                        MessageBox.Show("Mày nhập sai rồi cu\nCó nhập đéo gì đâu mà nhấn \"=\"", "Systax Error!");
+                        return;
+                    }
 
-                numbers.Add(Convert.ToDouble(tbl_display.Text));
-                tbl_display.Text = CalculateResult(numbers, operators).ToString();
-                tbl_displays.Text = cal + " = ";
-                cal = string.Empty;
-                /*cal = tbl_display.Text;*/
-                numbers.Clear();
-                /*numbers.Add(Convert.ToDouble(tbl_display.Text));*/
-                operators.Clear();
+                    if (tbl_display.Text == "-30122004")
+                    {
+                        tbl_display.Text = string.Empty;
+                        tbl_displays.Text = string.Empty;
+                        MessageBox.Show("Chuyển sang chế độ chuyên nghiệp thành công", "Congratulation!");
+                        Window1 window1 = new Window1();
+                        window1.ShowDialog();
+                        numbers.Clear();
+                        operators.Clear();
+                        return;
+                    }
+
+                    numbers.Add(Convert.ToDouble(tbl_display.Text));
+                    tbl_display.Text = CalculateResult(numbers, operators).ToString();
+                    tbl_displays.Text = cal + " = ";
+                    cal = string.Empty;
+                    /*cal = tbl_display.Text;*/
+                    numbers.Clear();
+                    /*numbers.Add(Convert.ToDouble(tbl_display.Text));*/
+                    operators.Clear();
+                }
             }
+            catch 
+            {
+                MessageBox.Show("Mày nhập sai rồi cu", "Systax Error");
+                numbers.Clear();
+                operators.Clear();
+                tbl_display.Text = string.Empty;
+                tbl_displays.Text = string.Empty;
+                cal = string.Empty;
+            }
+            
         }
     }
 }
